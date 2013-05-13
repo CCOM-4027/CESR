@@ -36,7 +36,7 @@
 </head>
 <body>
 	<div id="banner">
-			<h2>CESR <font size="5" color="white">Center for Evaluation and Sociomedical Research</font></h2>
+			<img src="images/CIES.png" alt="YOLATION" height="100" width="300">
 		</div>
 		<div id="container">
 
@@ -44,8 +44,6 @@
 	if (isset($_SESSION['user']) && !isset($_GET['logout'])) { // Show logged-in content.
 		echo "<h3>Welcome ".$_SESSION['name']. "</h3>";
 
-		echo '<form action="index.php" method="get" >
-			      <button name="logout" type="submit" value="true">logout</button></form><br>';
 
 		if ($_SESSION['perm'] == 1)
 			include 'timesheet.php';
@@ -59,6 +57,8 @@
 		if ($_SESSION['perm'] == 4){
 			include 'superuser.php';
 		}
+		echo '<div style="text-align:center"><form action="index.php" method="get" >
+			      <button name="logout" type="submit" value="true" style="float: center;">logout</button></form></div><br>';
 
 	} 
 	else { // Show login form.
