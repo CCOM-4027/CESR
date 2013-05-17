@@ -1,6 +1,6 @@
 <?php 
-	session_start();  	 // Start the session:     //$_SESSION = array(); // To fake logging out.
-	if (isset($_GET['logout'])){
+	session_start();  	 	// Start the session where Name, w_id and Permission are store
+	if (isset($_GET['logout'])){    // User Logout, erase the seccion
 		session_destroy();
 	}
 	// Check for a form submission.
@@ -40,28 +40,31 @@
 		</div>
 		<div id="container">
 
-<?php // Decide what content to display.
-	if (isset($_SESSION['user']) && !isset($_GET['logout'])) { // Show logged-in content.
+<?php 
+	// USER LOGIN SUCCESFULL
+	if (isset($_SESSION['user']) && !isset($_GET['logout'])) { 
 		echo "<br><h3>Welcome ".$_SESSION['name']. "</h3>";
 
-
-		if ($_SESSION['perm'] == 1)
+		if ($_SESSION['perm'] == 1)      // WORKER DISPLAY (Timesheet entry only)
 			include 'timesheet.php';
-		if ($_SESSION['perm'] == 2){
+		if ($_SESSION['perm'] == 2){     // SUPERVISOR DISPLAY (Timesheet and Reports)
 			include 'timesheet.php';
 			include 'perm2.php';
 		}
-		if ($_SESSION['perm'] == 3){
+		if ($_SESSION['perm'] == 3){     // Administrator Diaplay
 			include 'admin_team.php';
 		}
-		if ($_SESSION['perm'] == 4){
+		if ($_SESSION['perm'] == 4){     // SUPERUSER Display
 			include 'superuser.php';
 		}
+		// LOGOUT button to distroy seccion
 		echo '<div style="text-align:center"><form action="index.php" method="get" >
-			      <button name="logout" type="submit" value="true" style="float: center;">logout</button></form></div><br>';
-
+			      <button name="logout" type="submit" value="true" style="float: center;">logout
+			      </button></form></div><br>';
+				
 	} 
-	else { // Show login form.
+	// USER NOT LOGIN OR LOGIN FAIL
+	else { 
 		
 		echo '<div id="flexArea"><h1>Login</h1>
 		<form action="index.php" method="post" id="loginForm">';    // Start the form:  
@@ -69,8 +72,8 @@
 		if (isset($errors['incorrect'])) {      // Check for a general error:
 			echo '<p class="error">The user address and password submitted do not match those on file.</p>';
 		}
-
-		echo '<p id="userP">Username:&nbsp;  <input type="text" name="user" id="user"';  // Start the user input:
+		// Start the user input:
+		echo '<p id="userP">Username:&nbsp;  <input type="text" name="user" id="user"';
 		
 		if (isset($_POST['user'])) echo ' value="' . $_POST['user'] . '"';	// Make it sticky, if applicable:
 		
